@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.marshal.service.impl.ComputerMapper" >
+  <resultMap id="BaseResultMap" type="com.marshal.entity.Computer" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="computerName" property="computername" jdbcType="VARCHAR" />
+    <result column="brand" property="brand" jdbcType="VARCHAR" />
+    <result column="runMem" property="runmem" jdbcType="REAL" />
+    <result column="price" property="price" jdbcType="REAL" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, computerName, brand, runMem, price
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from computers
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from computers
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.marshal.entity.Computer" >
+    insert into computers (id, computerName, brand, 
+      runMem, price)
+    values (#{id,jdbcType=BIGINT}, #{computername,jdbcType=VARCHAR}, #{brand,jdbcType=VARCHAR}, 
+      #{runmem,jdbcType=REAL}, #{price,jdbcType=REAL})
+  </insert>
+  <insert id="insertSelective" parameterType="com.marshal.entity.Computer" >
+    insert into computers
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="computername != null" >
+        computerName,
+      </if>
+      <if test="brand != null" >
+        brand,
+      </if>
+      <if test="runmem != null" >
+        runMem,
+      </if>
+      <if test="price != null" >
+        price,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="computername != null" >
+        #{computername,jdbcType=VARCHAR},
+      </if>
+      <if test="brand != null" >
+        #{brand,jdbcType=VARCHAR},
+      </if>
+      <if test="runmem != null" >
+        #{runmem,jdbcType=REAL},
+      </if>
+      <if test="price != null" >
+        #{price,jdbcType=REAL},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.marshal.entity.Computer" >
+    update computers
+    <set >
+      <if test="computername != null" >
+        computerName = #{computername,jdbcType=VARCHAR},
+      </if>
+      <if test="brand != null" >
+        brand = #{brand,jdbcType=VARCHAR},
+      </if>
+      <if test="runmem != null" >
+        runMem = #{runmem,jdbcType=REAL},
+      </if>
+      <if test="price != null" >
+        price = #{price,jdbcType=REAL},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.marshal.entity.Computer" >
+    update computers
+    set computerName = #{computername,jdbcType=VARCHAR},
+      brand = #{brand,jdbcType=VARCHAR},
+      runMem = #{runmem,jdbcType=REAL},
+      price = #{price,jdbcType=REAL}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>
